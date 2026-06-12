@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nature Protection Foundation</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- React and ReactDOM via CDN -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+    
+    <!-- Babel for JSX compilation in browser -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        // --- Navbar Component ---
+        const Navbar = ({ currentPage, setCurrentPage }) => {
+          const [isOpen, React_useState] = React.useState(false);
+
+          const navItems = [
+            { id: 'home', label: 'Home' },
+            { id: 'about', label: 'About Us' },
+            { id: 'services', label: 'Initiatives' },
+            { id: 'contact', label: 'Get Involved' }
+          ];
+
+          const handleNavClick = (id) => {
+            setCurrentPage(id);
+            React_useState(false);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          };
+
+          return (
+            <nav className="navbar">
+              <div className="nav-logo" onClick={() => handleNavClick('home')}>
+                <i className="fa-solid fa-leaf"></i> NatureGuard
+              </div>
+              
+              <div className="menu-toggle" onClick={() => React_useState(!isOpen)}>
+                <i className={`fa-solid ${isOpen ? 'fa-xmark' : 'fa-bars'}`}></i>
+              </div>
+
+              <ul className={`nav-links ${isOpen ? 'open' : ''}`}>
+                {navItems.map(item => (
+                  <li 
+                    key={item.id} 
+                    className={currentPage === item.id ? 'active' : ''}
+                    onClick={() => handleNavClick(item.id)}
+                  >
+                    {item.label}
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          );
+        };
+
+        // --- Home Component ---
+        const Home = ({ setCurrentPage }) => {
+          return (
+            <section className="hero" id="home">
+              <div className="hero-content">
+                <h1>Protecting Our Planet, Together.</h1>
+                <p>Join the movement to preserve wildlife, restore forests, and combat climate change for future generations. Our actions today define tomorrow.</p>
+                <button className="btn btn-primary" onClick={() => setCurrentPage('services')}>
+                  Discover Our Initiatives
+                </button>
+              </div>
+            </section>
+          );
+        };
+
+        // --- About Component ---
+        const About = () => {
+          return (
+            <section className="section" id="about">
+              <h2 className="section-title">Who We Are</h2>
+              <div className="about-content">
+                <div>
+                  <img 
+                    src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                    alt="Nature Conservation" 
+                    className="about-img" 
+                  />
+                </div>
+                <div>
+                  <h3 style={{ marginBottom: '1rem', fontSize: '1.8rem', color: 'var(--primary)' }}>Our Mission</h3>
+                  <p style={{ marginBottom: '1.5rem', fontSize: '1.1rem' }}>
+                    NatureGuard is dedicated to safeguarding the world's most vulnerable ecosystems. 
+                    We believe that humanity and nature can thrive together. Through science-based 
+                    conservation, community engagement, and policy advocacy, we strive to build a 
+                    sustainable future.
+                  </p>
+                  <p style={{ fontSize: '1.1rem' }}>
+                    Since our founding, we have protected over 5 million acres of land and restored 
+                    vital habitats for endangered species. But our work is just beginning.
+                  </p>
+                </div>
+              </div>
+            </section>
+          );
+        };
+
+        // --- Services Component ---
+        const ServiceCard = ({ icon, title, description, image }) => {
+          return (
+            <div className="card">
+              <img src={image} alt={title} className="card-img" />
+              <div className="card-content">
+                <h3 style={{ color: 'var(--primary)', marginBottom: '0.5rem' }}>
+                  <i className={`fa-solid ${icon}`} style={{ marginRight: '0.5rem' }}></i>
+                  {title}
+                </h3>
+                <p>{description}</p>
+              </div>
+            </div>
+          );
+        };
+
+        const Services = () => {
+          const initiatives = [
+            {
+              id: 1,
+              icon: 'fa-tree',
+              title: 'Reforestation',
+              description: 'Planting native trees to restore degraded landscapes and combat carbon emissions.',
+              image: 'https://images.unsplash.com/photo-1513836279014-a89f7a76ae86?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            },
+            {
+              id: 2,
+              icon: 'fa-water',
+              title: 'Ocean Cleanup',
+              description: 'Removing plastic waste from marine ecosystems to protect marine life and coral reefs.',
+              image: 'https://images.unsplash.com/photo-1621451537084-482c73073e0f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            },
+            {
+              id: 3,
+              icon: 'fa-paw',
+              title: 'Wildlife Protection',
+              description: 'Creating safe havens for endangered species and fighting against illegal poaching.',
+              image: 'https://images.unsplash.com/photo-1564349683136-77e08dba1ef7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
+            }
+          ];
+
+          return (
+            <section className="section" id="services">
+              <h2 className="section-title">Our Initiatives</h2>
+              <p style={{ textAlign: 'center', maxWidth: '800px', margin: '0 auto 2rem' }}>
+                We tackle the most pressing environmental challenges through targeted, impactful projects across the globe.
+              </p>
+              <div className="grid-container">
+                {initiatives.map(item => (
+                  <ServiceCard 
+                    key={item.id}
+                    icon={item.icon}
+                    title={item.title}
+                    description={item.description}
+                    image={item.image}
+                  />
+                ))}
+              </div>
+            </section>
+          );
+        };
+
+        // --- Contact Component ---
+        const Contact = () => {
+          const [formData, setFormData] = React.useState({
+            name: '',
+            email: '',
+            message: ''
+          });
+          const [submitted, setSubmitted] = React.useState(false);
+
+          const handleChange = (e) => {
+            const { name, value } = e.target;
+            setFormData(prev => ({
+              ...prev,
+              [name]: value
+            }));
+          };
+
+          const handleSubmit = (e) => {
+            e.preventDefault();
+            // Simulate form submission
+            console.log('Form submitted:', formData);
+            setSubmitted(true);
+            setFormData({ name: '', email: '', message: '' });
+            
+            // Reset success message after 3 seconds
+            setTimeout(() => {
+              setSubmitted(false);
+            }, 3000);
+          };
+
+          return (
+            <section className="section" id="contact">
+              <h2 className="section-title">Get Involved</h2>
+              <div className="contact-container">
+                <div>
+                  <h3 style={{ marginBottom: '1.5rem', color: 'var(--primary)' }}>Join the Cause</h3>
+                  <p style={{ marginBottom: '2rem' }}>
+                    Whether you want to volunteer, donate, or just learn more about our work, 
+                    we'd love to hear from you. Drop us a message and our team will get back to you shortly.
+                  </p>
+                  
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    <div>
+                      <i className="fa-solid fa-location-dot" style={{ width: '30px', color: 'var(--primary)' }}></i>
+                      Mumbai, India
+                    </div>
+                    <div>
+                      <i className="fa-solid fa-envelope" style={{ width: '30px', color: 'var(--primary)' }}></i>
+                      aniket08012002@gmail.com
+                    </div>
+                    <div>
+                      <i className="fa-solid fa-phone" style={{ width: '30px', color: 'var(--primary)' }}></i>
+                      +91 98765 43210
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  {submitted ? (
+                    <div style={{ 
+                      padding: '2rem', 
+                      backgroundColor: 'var(--secondary)', 
+                      color: 'var(--primary-dark)',
+                      borderRadius: '8px',
+                      textAlign: 'center'
+                    }}>
+                      <i className="fa-solid fa-circle-check" style={{ fontSize: '3rem', marginBottom: '1rem', color: 'var(--primary)' }}></i>
+                      <h3>Thank you for reaching out!</h3>
+                      <p>We have received your message and will reply soon.</p>
+                    </div>
+                  ) : (
+                    <form onSubmit={handleSubmit}>
+                      <div className="form-group">
+                        <input 
+                          type="text" 
+                          name="name"
+                          className="form-control" 
+                          placeholder="Your Name" 
+                          value={formData.name}
+                          onChange={handleChange}
+                          required 
+                        />
+                      </div>
+                      <div className="form-group">
+                        <input 
+                          type="email" 
+                          name="email"
+                          className="form-control" 
+                          placeholder="Your Email Address" 
+                          value={formData.email}
+                          onChange={handleChange}
+                          required 
+                        />
+                      </div>
+                      <div className="form-group">
+                        <textarea 
+                          name="message"
+                          className="form-control" 
+                          rows="5" 
+                          placeholder="How would you like to help?"
+                          value={formData.message}
+                          onChange={handleChange}
+                          required
+                        ></textarea>
+                      </div>
+                      <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>
+                        Send Message
+                      </button>
+                    </form>
+                  )}
+                </div>
+              </div>
+            </section>
+          );
+        };
+
+        // --- Main App Component ---
+        const App = () => {
+          const [currentPage, setCurrentPage] = React.useState('home');
+
+          const renderPage = () => {
+            switch (currentPage) {
+              case 'home':
+                return <Home setCurrentPage={setCurrentPage} />;
+              case 'about':
+                return <About />;
+              case 'services':
+                return <Services />;
+              case 'contact':
+                return <Contact />;
+              default:
+                return <Home setCurrentPage={setCurrentPage} />;
+            }
+          };
+
+          return (
+            <div>
+              <Navbar currentPage={currentPage} setCurrentPage={setCurrentPage} />
+              <main>
+                {renderPage()}
+              </main>
+            </div>
+          );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
